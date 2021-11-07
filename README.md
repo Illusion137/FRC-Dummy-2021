@@ -9,4 +9,4 @@ Sample/Testing for FRC Robot
 ## OpenCV Installation :: v4.5.4
 =================================
 - Download [OpenCV](https://github.com/opencv/opencv/tree/4.5.4)
-- Install library onto "C:\"
+- Install library onto "C:/"
