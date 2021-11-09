@@ -59,5 +59,6 @@
     "xtr1common": "cpp",
     "xutility": "cpp"
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }
