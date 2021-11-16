@@ -41,7 +41,7 @@ deploy {
 def includeSrcInIncludeRoot = false
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = true
+def includeDesktopSupport = false
 
 // Enable simulation gui support. Must check the box in vscode to enable support
 // upon debugging
@@ -71,7 +71,7 @@ model {
             sources.cpp {
                 source {
                     srcDir 'src/main/cpp'
-                    include '**/*.cpp', '**/*.cc', '**/*.h'
+                    include '**/*.cpp', '**/*.cc', '*/*.h'
                 }
                 exportedHeaders {
                     srcDir 'src/main/include'
@@ -93,7 +93,7 @@ model {
             sources.cpp {
                 source {
                     srcDir 'src/test/cpp'
-                    include '**/*.cpp'
+                    include '**/*.cpp', '**/*.h'
                 }
             }
 
