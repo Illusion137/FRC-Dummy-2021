@@ -9,7 +9,11 @@
 #include <frc/Timer.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/livewindow/LiveWindow.h>
+#include <frc/XboxController.h>
+#include <frc/GenericHID.h>
 
+#define RightTrigger frc::GenericHID::JoystickHand::kRightHand
+#define LeftTrigger frc::GenericHID::JoystickHand::kLeftHand
 class Robot : public frc::TimedRobot {
  public:
   Robot() {
@@ -37,19 +41,29 @@ class Robot : public frc::TimedRobot {
 
   void TeleopPeriodic() override {
     // Drive with arcade style (use right stick)
-    m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
+    m_robotDrive.ArcadeDrive(getDriveSpeed(), m_stick.GetX());
   }
+
 
   void TestInit() override {}
 
   void TestPeriodic() override {}
 
+  double getDriveSpeed() {
+    if (m_controller.GetTriggerAxis(RightTrigger) > 0 
+      && m_controller.GetTriggerAxis(RightTrigger) < 0.5) {
+      return m_controller.GetTriggerAxis(RightTrigger);
+    } else if (m_controller.GetTriggerAxis(LeftTrigger) > 0 
+      && m_controller.GetTriggerAxis(LeftTrigger) < 0.5) {
+      return -m_controller.GetTriggerAxis(LeftTrigger);
+    }
+  }
  private:
   // Robot drive system
   frc::PWMSparkMax m_left{0};
   frc::PWMSparkMax m_right{1};
   frc::DifferentialDrive m_robotDrive{m_left, m_right};
-
+  frc::XboxController m_controller{0};
   frc::Joystick m_stick{0};
   frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
   frc::Timer m_timer;
@@ -59,4 +73,5 @@ class Robot : public frc::TimedRobot {
 int main() {
   return frc::StartRobot<Robot>();
 }
+
 #endif
