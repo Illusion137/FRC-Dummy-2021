@@ -11,11 +11,15 @@
 #include <frc/livewindow/LiveWindow.h>
 #include <frc/XboxController.h>
 #include <frc/GenericHID.h>
+#include <cameraserver/CameraServer.h>
 
 #include "Definitions.h"
+#include "commands/DriveRobot.h"
+
 class Robot : public frc::TimedRobot {
  public:
   Robot() {
+    frc::CameraServer::GetInstance()->StartAutomaticCapture();
     m_robotDrive.SetExpiration(0.1);
     m_timer.Start();
   }
@@ -39,8 +43,8 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override {}
 
   void TeleopPeriodic() override {
-    // Drive with arcade style (use right stick)
-    m_robotDrive.ArcadeDrive(getDriveSpeed(), m_controller.GetX(frc::GenericHID::kRightHand));
+    nerds::changeMaxDriveSpeed();
+    nerds::DriveRobot();
   }
 
 
@@ -48,28 +52,9 @@ class Robot : public frc::TimedRobot {
 
   void TestPeriodic() override {}
 
-  double getDriveSpeed() {
-    if (RT_Value > 0) {
-      if (RT_Value <= 0.5) {
-        return RT_Value;
-      } else {
-        return 0.5;
-      }
-    } else if (LT_Value > 0) {
-      if (LT_Value <= 0.5) {
-        return -LT_Value;
-      } else {
-        return -0.5;
-      }
-    }
-    return 0;
-  }
+
  private:
   // Robot drive system
-  frc::PWMSparkMax m_left{0};
-  frc::PWMSparkMax m_right{1};
-  frc::DifferentialDrive m_robotDrive{m_left, m_right};
-  frc::XboxController m_controller{0};
   frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
   frc::Timer m_timer;
 };
