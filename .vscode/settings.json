@@ -89,7 +89,8 @@
     "mutex": "cpp",
     "sstream": "cpp",
     "thread": "cpp",
-    "cinttypes": "cpp"
+    "cinttypes": "cpp",
+    "*.inc": "cpp"
   },
   "git.ignoreLimitWarning": true,
   "C_Cpp.default.configurationProvider": "vscode-wpilib"
